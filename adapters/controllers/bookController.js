@@ -1,17 +1,24 @@
 class BookController {
-    constructor(createBook) {
-      this.createBook = createBook;
+    constructor(createBook, getBooks) {
+        this.createBook = createBook;
+        this.getBooks = getBooks;
     }
-  
-    async create(req, res) {
-      try {
-        const book = await this.createBook.execute(req.body);
-        res.status(201).json(book).send('Post created successfully.');;
-      } catch (error) {
-        res.status(400).json({ error: error.message });
-      }
+    async create(request, response) {
+        try {
+            const book = await this.createBook.execute(request.body);
+            response.status(201).json(book);;
+        } catch (error) {
+            response.status(400).json({ error: error.message });
+        }
     }
-  }
-  
-  module.exports = BookController;
+    async getAll(request, response) {
+        try {
+            const books = await this.getBooks.execute();
+            response.status(200).json(books);
+        } catch (error) {
+            response.status(400).json({ error: error.message });
+        }
+    }
+}
+module.exports = BookController;
   
