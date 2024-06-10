@@ -1,19 +1,19 @@
 const express = require('express')
 const pool = require('./config/database'); 
-const bookRoutes = require('./routes/bookRoutes');
+const booksRouter = require('./routes/bookRoutes');
 const app = express()
 const port = 8000
 
 app.use(express.json());
-app.get('/', (request, response) => {
-    res.send('Hello World!')
+app.get('/health', (request, response) => {
+    response.send('V1.0')
 })
-app.use('/books', bookRoutes);
+app.use('/api', booksRouter);
 app.listen(port, async () => {
     try {
-      await pool.connect(); // Test database connection
-      console.log(`Example app listening on port ${port}`);
+        await pool.connect(); 
+        console.log(`Example app listening on port ${port}`);
     } catch (err) {
-      console.error('Unable to connect to the database:', err);
+        console.error('Unable to connect to the database:', err);
     }
 });
