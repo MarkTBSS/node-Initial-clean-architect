@@ -9,10 +9,12 @@ class BookRepository {
         );
         return result.rows[0];
     }
+
     async getAll() {
         const result = await pool.query('SELECT * FROM books');
         return result.rows;
     }
+
     async update(bookId, updateData) {
         const fields = [];
         const values = [];
@@ -29,5 +31,11 @@ class BookRepository {
         );
         return result.rows[0];
     }
+
+    async getBy(param, value) {
+        const result = await pool.query(`SELECT * FROM books WHERE ${param} = $1`, [value]);
+        return result.rows;
+    }
 }
+
 module.exports = BookRepository;
